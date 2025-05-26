@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+    container_name: backend
+    environment:
+      PGHOST: ${PGHOST}
+      PGUSER: ${PGUSER}
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: ${PGDATABASE}
+      PGPORT: ${PGPORT}
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:80"
+    networks:
+      - app_network
+    container_name: frontend
+
+networks:
+  app_network:
+
+volumes:
+  db_data:

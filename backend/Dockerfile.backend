@@ -1,0 +1,20 @@
+FROM node:18-bullseye
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install 
+
+COPY . .
+
+RUN npm install dotenv
+
+# Копируем скрипт ожидания wait-for-it.sh (скачай его заранее в папку backend)
+COPY wait-for-it.sh /wait-for-it.sh
+
+# Делаем скрипт исполняемым
+RUN chmod +x /wait-for-it.sh
+
+# CMD ["/wait-for-it.sh", "db:5432", "--", "node", "index.js"]
+
+CMD ["node", "index.js"]
