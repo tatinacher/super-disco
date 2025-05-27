@@ -2,6 +2,10 @@ require('dotenv').config()
 const fastify = require('fastify')({ logger: true })
 const { Client } = require('pg')
 
+fastify.register(require('@fastify/cors'), {
+    origin: process.env.FRONTEND_ORIGIN || true, // Можно указать конкретный домен
+})
+
 const client = new Client({
     host: process.env.PGHOST,
     user: process.env.PGUSER,
